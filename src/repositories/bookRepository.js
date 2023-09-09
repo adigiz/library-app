@@ -1,7 +1,12 @@
 const knex = require("../database/knex");
 
 const getAllBooks = (limit, offset) => {
-  return knex("books").select("*").limit(limit).offset(offset).orderBy("title");
+  return knex("books")
+    .select("*")
+    .limit(limit)
+    .offset(offset)
+    .orderBy("title")
+    .whereNull("deleted_at");
 };
 
 const createBook = (title, author, isbn) => {
@@ -22,7 +27,7 @@ const updateBook = (id, title, author, isbn) => {
 
 // Delete a book
 const deleteBook = (id) => {
-  return knex("books").where({ id }).del().returning("*");
+  return knex("books").where({ id }).update({ deleted_at: knex.fn.now() });
 };
 
 // Borrow a book
