@@ -1,14 +1,28 @@
 const bookService = require("../services/bookService");
 
 const getAllBooks = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 10, search } = req.query;
   const offset = (page - 1) * limit;
 
   try {
-    const books = await bookService.getAllBooks(limit, offset);
-    res.json(books);
+    const { books, totalRecords } = await bookService.getAllBooks(
+      limit,
+      offset,
+      search
+    );
+
+    const totalPages = Math.ceil(totalRecords / limit);
+
+    const pagination = {
+      page: page,
+      totalRecords,
+      totalPages,
+    };
+
+    res.json({ data: books, ...pagination });
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

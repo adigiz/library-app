@@ -1,12 +1,27 @@
 const knex = require("../database/knex");
 
-const getAllBooks = (limit, offset) => {
-  return knex("books")
-    .select("*")
+const getAllBooks = async (limit, offset, search) => {
+  const query = knex('books')
+    .select('*')
+    .whereNull('deleted_at') // Exclude logically deleted books
+    .modify((builder) => {
+      if (search) {
+        builder.where('title', 'ilike', `%${search}%`);
+      }
+    })
     .limit(limit)
     .offset(offset)
-    .orderBy("title")
-    .whereNull("deleted_at");
+    .orderBy('title'); // Order by any suitable field
+
+  // Create a count query for total records
+  const countQuery = knex('books').whereNull('deleted_at');
+  if (search) {
+    countQuery.where('title', 'ilike', `%${search}%`);
+  }
+
+  const [books, [{ totalRecords }]] = await Promise.all([query, countQuery.count('* as totalRecords')]);
+
+  return { books, totalRecords: parseInt(totalRecords, 10) };
 };
 
 const createBook = (title, author, isbn) => {
