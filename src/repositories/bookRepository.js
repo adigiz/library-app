@@ -32,6 +32,10 @@ const getBookById = (id) => {
   return knex("books").select("*").where({ id }).first();
 };
 
+const getBookBySlug = (slug) => {
+  return knex("books").select("*").where({ slug }).first();
+};
+
 // Update a book
 const updateBook = (id, title, author, isbn) => {
   return knex("books")
@@ -96,6 +100,7 @@ module.exports = {
   getAllBooks,
   createBook,
   getBookById,
+  getBookBySlug,
   updateBook,
   deleteBook,
   borrowBook,

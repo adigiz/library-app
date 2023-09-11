@@ -19,7 +19,7 @@ const getAllBooks = async (req, res) => {
       totalPages,
     };
 
-    res.json({ data: books, ...pagination });
+    res.json({ results: books, ...pagination });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -44,6 +44,19 @@ const getBookById = async (req, res) => {
   const { id } = req.params;
   try {
     const book = await bookService.getBookById(id);
+    if (!book) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+    res.json(book);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getBookBySlug = async (req, res) => {
+  const { slug } = req.params;
+  try {
+    const book = await bookService.getBookBySlug(slug);
     if (!book) {
       return res.status(404).json({ error: "Book not found" });
     }
@@ -117,6 +130,7 @@ const returnBook = async (req, res) => {
 module.exports = {
   getAllBooks,
   getBookById,
+  getBookBySlug,
   createBook,
   updateBook,
   deleteBook,

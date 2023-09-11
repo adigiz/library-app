@@ -5,7 +5,8 @@ const booksController = require("../controllers/bookController");
 
 // Books CRUD
 router.get("/books", booksController.getAllBooks);
-router.get("/books/:id", booksController.getBookById);
+// router.get("/books/:id", booksController.getBookById);
+router.get("/books/:slug", booksController.getBookBySlug);
 router.post("/books", booksController.createBook);
 router.put("/books/:id", booksController.updateBook);
 router.delete("/books/:id", booksController.deleteBook);

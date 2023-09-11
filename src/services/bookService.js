@@ -17,6 +17,10 @@ const getBookById = (id) => {
   return bookRepository.getBookById(id);
 };
 
+const getBookBySlug = (slug) => {
+  return bookRepository.getBookBySlug(slug);
+};
+
 // Update a book
 const updateBook = (id, title, author, isbn) => {
   return bookRepository.updateBook(id, title, author, isbn);
@@ -41,6 +45,7 @@ module.exports = {
   getAllBooks,
   createBook,
   getBookById,
+  getBookBySlug,
   updateBook,
   deleteBook,
   borrowBook,
