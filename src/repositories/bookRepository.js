@@ -27,8 +27,8 @@ const getAllBooks = async (limit, offset, search) => {
   return { books, totalRecords: parseInt(totalRecords, 10) };
 };
 
-const createBook = (title, author, isbn) => {
-  return knex("books").insert({ title, author, isbn }).returning("*");
+const createBook = (title, author, isbn, slug) => {
+  return knex("books").insert({ title, author, isbn, slug }).returning("*");
 };
 
 const getBookById = (id) => {

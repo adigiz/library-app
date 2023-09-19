@@ -31,18 +31,16 @@ const getAllBooks = async (req, res) => {
 };
 
 const createBook = async (req, res) => {
-  if (req.file) {
-    return res.status(200).json({ message: "success adding cover" });
-  }
-  const { title, author, isbn } = req.body;
-  if (!title || !author || !isbn) {
+  const { title, author, isbn, slug } = req.body;
+  if (!title || !author || !isbn || !slug) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
   try {
-    const newBook = await bookService.createBook(title, author, isbn);
+    const newBook = await bookService.createBook(title, author, isbn, slug);
     res.status(201).json(newBook);
   } catch (error) {
+    console.error(error)
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
