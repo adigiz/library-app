@@ -11,6 +11,7 @@ CREATE TABLE books (
 CREATE TABLE borrowed_books (
   id SERIAL PRIMARY KEY,
   book_id INTEGER REFERENCES books(id),
+  user_id INTEGER,
   borrowed_at TIMESTAMP NOT NULL DEFAULT NOW(),
   returned_at TIMESTAMP
 );

@@ -1,25 +1,28 @@
 const knex = require("../database/knex");
 
 const getAllBooks = async (limit, offset, search) => {
-  const query = knex('books')
-    .select('*')
-    .whereNull('deleted_at') // Exclude logically deleted books
+  const query = knex("books")
+    .select("*")
+    .whereNull("deleted_at") // Exclude logically deleted books
     .modify((builder) => {
       if (search) {
-        builder.where('title', 'ilike', `%${search}%`);
+        builder.where("title", "ilike", `%${search}%`);
       }
     })
     .limit(limit)
     .offset(offset)
-    .orderBy('title'); // Order by any suitable field
+    .orderBy("title"); // Order by any suitable field
 
   // Create a count query for total records
-  const countQuery = knex('books').whereNull('deleted_at');
+  const countQuery = knex("books").whereNull("deleted_at");
   if (search) {
-    countQuery.where('title', 'ilike', `%${search}%`);
+    countQuery.where("title", "ilike", `%${search}%`);
   }
 
-  const [books, [{ totalRecords }]] = await Promise.all([query, countQuery.count('* as totalRecords')]);
+  const [books, [{ totalRecords }]] = await Promise.all([
+    query,
+    countQuery.count("* as totalRecords"),
+  ]);
 
   return { books, totalRecords: parseInt(totalRecords, 10) };
 };
@@ -50,21 +53,29 @@ const deleteBook = (id) => {
 };
 
 // Borrow a book
-const borrowBook = async (id) => {
-  const book = await getBookById(id);
-  if (!book || book.is_borrowed) {
-    return null; // Book not found or already borrowed
-  }
-
+const borrowBook = async (id, userId) => {
   // Create a new borrowing record
   const [borrowedBook] = await knex("borrowed_books")
-    .insert({ book_id: id, borrowed_at: new Date() })
+    .insert({ book_id: id, borrowed_at: new Date(), user_id: userId })
     .returning("*");
 
   // Update the book's status to borrowed
   await knex("books").where({ id }).update({ is_borrowed: true });
 
   return borrowedBook;
+};
+
+const hasBorrowBook = async (userId) => {
+  const borrowedBook = await knex("borrowed_books")
+    .select("*")
+    .where({ user_id: userId })
+    .first();
+
+  if (borrowedBook) {
+    return true;
+  }
+
+  return false;
 };
 
 // Return a book
@@ -105,4 +116,5 @@ module.exports = {
   deleteBook,
   borrowBook,
   returnBook,
+  hasBorrowBook,
 };

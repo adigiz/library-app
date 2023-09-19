@@ -1,4 +1,5 @@
 const bookService = require("../services/bookService");
+const BookResponse = require("../dto/booksResponse");
 
 const getAllBooks = async (req, res) => {
   const { page = 1, limit = 10, search } = req.query;
@@ -18,7 +19,10 @@ const getAllBooks = async (req, res) => {
       totalRecords,
       totalPages,
     };
-
+    let response = [];
+    books.map((book) => {
+      response.push(new BookResponse(book));
+    });
     res.json({ results: books, ...pagination });
   } catch (error) {
     console.log(error);
@@ -101,7 +105,7 @@ const deleteBook = async (req, res) => {
 
 // Borrow a book
 const borrowBook = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
   try {
     const borrowedBook = await bookService.borrowBook(id);
     if (!borrowedBook) {

@@ -32,8 +32,22 @@ const deleteBook = (id) => {
 };
 
 // Borrow a book
-const borrowBook = (id) => {
-  return bookRepository.borrowBook(id);
+const borrowBook = async (id, userId) => {
+  try {
+    const book = await bookRepository.getBookById(id);
+    if (!book || book.is_borrowed) {
+      throw new Error("book unavailable to borrow"); // Book not found or already borrowed
+    }
+
+    const hasBorrowed = await bookRepository.hasBorrowBook(userId);
+    if (hasBorrowed) {
+      throw new Error("can only borrow one book at a time");
+    }
+
+    return bookRepository.borrowBook(id);
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Return a book
