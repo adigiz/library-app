@@ -31,6 +31,9 @@ const getAllBooks = async (req, res) => {
 };
 
 const createBook = async (req, res) => {
+  if (req.file) {
+    return res.status(200).json({ message: "success adding cover" });
+  }
   const { title, author, isbn } = req.body;
   if (!title || !author || !isbn) {
     return res.status(400).json({ error: "Missing required fields" });
