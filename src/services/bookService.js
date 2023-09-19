@@ -9,8 +9,8 @@ const getAllBooks = async (limit, offset, search) => {
   return { books, totalRecords };
 };
 
-const createBook = (title, author, isbn, slug) => {
-  return bookRepository.createBook(title, author, isbn, slug);
+const createBook = (req) => {
+  return bookRepository.createBook(req);
 };
 // Get a book by ID
 const getBookById = (id) => {

@@ -32,15 +32,25 @@ const getAllBooks = async (req, res) => {
 
 const createBook = async (req, res) => {
   const { title, author, isbn, slug } = req.body;
-  if (!title || !author || !isbn || !slug) {
-    return res.status(400).json({ error: "Missing required fields" });
+  if (!req.file) {
+    return res.status(400).json({ error: "missing cover image" });
+  }
+  const coverPath = req.file.path;
+  if (!title || !author || !isbn || !slug || !coverPath) {
+    return res.status(400).json({ error: "missing required fields" });
   }
 
   try {
-    const newBook = await bookService.createBook(title, author, isbn, slug);
+    const newBook = await bookService.createBook({
+      title,
+      author,
+      isbn,
+      slug,
+      coverPath,
+    });
     res.status(201).json(newBook);
   } catch (error) {
-    console.error(error)
+    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

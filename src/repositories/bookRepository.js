@@ -1,4 +1,5 @@
 const knex = require("../database/knex");
+const { uploadToCloud } = require("../middlewares/imageUploadMiddleware");
 
 const getAllBooks = async (limit, offset, search) => {
   const query = knex("books")
@@ -27,8 +28,19 @@ const getAllBooks = async (limit, offset, search) => {
   return { books, totalRecords: parseInt(totalRecords, 10) };
 };
 
-const createBook = (title, author, isbn, slug) => {
-  return knex("books").insert({ title, author, isbn, slug }).returning("*");
+const createBook = async (req) => {
+  const { title, author, isbn, slug, coverPath } = req;
+  try {
+    const url = await uploadToCloud(coverPath);
+    if (url) {
+      return knex("books")
+        .insert({ title, author, isbn, slug, cover: url })
+        .returning("*");
+    }
+    throw new Error("failed to upload image");
+  } catch (err) {
+    throw new Error("failed to create book");
+  }
 };
 
 const getBookById = (id) => {

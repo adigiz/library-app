@@ -4,6 +4,8 @@ CREATE TABLE books (
   title VARCHAR(255) NOT NULL,
   author VARCHAR(255) NOT NULL,
   isbn VARCHAR(13) NOT NULL,
+  slug TEXT NOT NULL,
+  cover TEXT NOT NULL,
   is_borrowed BOOLEAN DEFAULT FALSE
 );
 

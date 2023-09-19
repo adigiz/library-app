@@ -2,13 +2,13 @@
 const express = require("express");
 const router = express.Router();
 const booksController = require("../controllers/bookController");
-const upload = require("../middlewares/imageUploadMiddleware");
+const { imageUpload } = require("../middlewares/imageUploadMiddleware");
 
 // Books CRUD
 router.get("/books", booksController.getAllBooks);
 // router.get("/books/:id", booksController.getBookById);
 router.get("/books/:slug", booksController.getBookBySlug);
-router.post("/books", upload.single('cover'), booksController.createBook);
+router.post("/books", imageUpload.single("cover"), booksController.createBook);
 router.put("/books/:id", booksController.updateBook);
 router.delete("/books/:id", booksController.deleteBook);
 
