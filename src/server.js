@@ -4,11 +4,13 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 const bookRoutes = require("./routes/books");
+const authRoutes = require("./routes/auth");
 const errorMiddleware = require("./middlewares/errorMiddleware");
 
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
 
+app.use(authRoutes);
 app.use(bookRoutes);
 app.use(errorMiddleware);
 

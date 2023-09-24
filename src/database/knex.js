@@ -11,6 +11,9 @@ const conn = {
 const knex = require("knex")({
   client: "pg",
   connection: conn,
+  migrations: {
+    tableName: "knex-migrations",
+  },
 });
 
 module.exports = knex;
