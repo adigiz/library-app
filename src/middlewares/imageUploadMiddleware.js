@@ -4,9 +4,9 @@ const cloudinary = require("cloudinary");
 const customError = require("../sentinel/error");
 
 cloudinary.config({
-  cloud_name: "dv74fojbd",
-  api_key: "815833398227773",
-  api_secret: "u6W40b4pPdkwowIqFqBwmqnoHu4",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
 });
 
 const storage = multer.diskStorage({
