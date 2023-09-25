@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 const booksController = require("../controllers/bookController");
 const { imageUpload } = require("../middlewares/imageUploadMiddleware");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 // Books CRUD
 router.get("/books", booksController.getAllBooks);
 router.get("/books/:slug", booksController.getBookBySlug);
-router.post("/books", imageUpload.single("cover"), booksController.createBook);
+router.post("/books", imageUpload.single("cover"), authMiddleware, booksController.createBook);
 router.put("/books/:id", booksController.updateBook);
 router.delete("/books/:id", booksController.deleteBook);
 

@@ -4,7 +4,7 @@ const authService = require("../services/authService");
 const { USERNAME_ALREADY_EXIST_ERROR } = require("../sentinel/error");
 const RegisterResponse = require("../dto/registerResponse");
 
-const secret = "secret-key";
+const secret = process.env.SECRET_KEY;
 
 const register = async (req, res) => {
   const { username, password } = req.body;
@@ -20,12 +20,10 @@ const register = async (req, res) => {
 
   try {
     const user = await authService.register(username, password);
-    res
-      .status(201)
-      .json({
-        message: "user successfully created",
-        data: new RegisterResponse(user[0]),
-      });
+    res.status(201).json({
+      message: "user successfully created",
+      data: new RegisterResponse(user[0]),
+    });
   } catch (error) {
     if (error.message === USERNAME_ALREADY_EXIST_ERROR) {
       return res.status(200).json({ error: error.message });
