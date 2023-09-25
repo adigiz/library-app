@@ -2,10 +2,11 @@ const jwt = require("jsonwebtoken");
 
 const authService = require("../services/authService");
 const { USERNAME_ALREADY_EXIST_ERROR } = require("../sentinel/error");
+const RegisterResponse = require("../dto/registerResponse");
 
 const secret = "secret-key";
 
-const register = (req, res) => {
+const register = async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
     return res.status(400).json({ error: "missing required field" });
@@ -18,8 +19,13 @@ const register = (req, res) => {
   }
 
   try {
-    const user = authService.register(username, password);
-    res.status(201).json({ message: "user successfully created", data: user });
+    const user = await authService.register(username, password);
+    res
+      .status(201)
+      .json({
+        message: "user successfully created",
+        data: new RegisterResponse(user[0]),
+      });
   } catch (error) {
     if (error.message === USERNAME_ALREADY_EXIST_ERROR) {
       return res.status(200).json({ error: error.message });
@@ -28,14 +34,14 @@ const register = (req, res) => {
   }
 };
 
-const login = (req, res) => {
+const login = async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
     return res.status(400).json({ error: "missing required field" });
   }
 
   try {
-    const user = authService.login(username, password);
+    const user = await authService.login(username, password);
     const accessToken = jwt.sign(
       {
         id: user.id,
