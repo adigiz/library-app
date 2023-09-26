@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const authService = require("../services/authService");
-const { USERNAME_ALREADY_EXIST_ERROR } = require("../sentinel/error");
+const { USERNAME_ALREADY_EXIST_ERROR, WRONG_CREDENTIALS_ERROR } = require("../sentinel/error");
 const RegisterResponse = require("../dto/registerResponse");
 
 const secret = process.env.SECRET_KEY;
@@ -26,7 +26,7 @@ const register = async (req, res) => {
     });
   } catch (error) {
     if (error.message === USERNAME_ALREADY_EXIST_ERROR) {
-      return res.status(200).json({ error: error.message });
+      return res.status(401).json({ error: error.message });
     }
     res.status(500).json({ error: error.message });
   }
@@ -49,7 +49,10 @@ const login = async (req, res) => {
     );
     return res.json({ accessToken: accessToken });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    if (error.message === WRONG_CREDENTIALS_ERROR) {
+      return res.status(401).json({ error: error.message})
+    }
+    res.status(500).json({ error: error.message });
   }
 };
 
