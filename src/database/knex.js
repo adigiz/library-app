@@ -10,7 +10,8 @@ const conn = {
 
 const knex = require("knex")({
   client: "pg",
-  connection: conn,
+  connection:
+    process.env.ENVIRONMENT === "PRODUCTION" ? process.env.DB_URL : conn,
   migrations: {
     tableName: "knex-migrations",
   },
