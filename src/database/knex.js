@@ -11,7 +11,7 @@ const conn = {
 const knex = require("knex")({
   client: "pg",
   connection:
-    process.env.ENVIRONMENT === "PRODUCTION" ? process.env.DB_URL : conn,
+    process.env.ENVIRONMENT === "PRODUCTION" ? process.env.DB_URL + "?sslmode=require" : conn,
   migrations: {
     tableName: "knex-migrations",
   },
