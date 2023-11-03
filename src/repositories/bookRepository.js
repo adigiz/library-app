@@ -1,7 +1,7 @@
 const knex = require("../database/knex");
 const { uploadToCloud } = require("../middlewares/imageUploadMiddleware");
 
-const getAllBooks = async (limit, offset, search) => {
+const getAllBooks = async ({ limit, offset, search, sortBy, sort }) => {
   const query = knex("books")
     .select("*")
     .whereNull("deleted_at") // Exclude logically deleted books
@@ -12,7 +12,7 @@ const getAllBooks = async (limit, offset, search) => {
     })
     .limit(limit)
     .offset(offset)
-    .orderBy("title"); // Order by any suitable field
+    .orderBy(sortBy, sort); // Order by any suitable field
 
   // Create a count query for total records
   const countQuery = knex("books").whereNull("deleted_at");

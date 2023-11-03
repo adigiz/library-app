@@ -1,11 +1,7 @@
 const bookRepository = require("../repositories/bookRepository");
 
-const getAllBooks = async (limit, offset, search) => {
-  const { books, totalRecords } = await bookRepository.getAllBooks(
-    limit,
-    offset,
-    search
-  );
+const getAllBooks = async (bookReq) => {
+  const { books, totalRecords } = await bookRepository.getAllBooks(bookReq);
   return { books, totalRecords };
 };
 

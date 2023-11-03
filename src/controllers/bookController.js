@@ -1,19 +1,14 @@
 const bookService = require("../services/bookService");
 const BookResponse = require("../dto/booksResponse");
+const BookRequest = require("../dto/bookRequest");
 
 const getAllBooks = async (req, res) => {
-  const { page = 1, limit = 10, search } = req.query;
+  const { page = 1, limit = 10, search, sort="desc", sortBy="created_at" } = req.query;
   const offset = (page - 1) * limit;
-
+  const bookReq = new BookRequest({limit, offset, search, sort, sortBy})
   try {
-    const { books, totalRecords } = await bookService.getAllBooks(
-      limit,
-      offset,
-      search
-    );
-
+    const { books, totalRecords } = await bookService.getAllBooks(bookReq);
     const totalPages = Math.ceil(totalRecords / limit);
-
     const pagination = {
       page: page,
       totalRecords,

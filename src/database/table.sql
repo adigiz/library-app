@@ -113,3 +113,70 @@ VALUES
     'In the final book, Harry, Ron, and Hermione go on a quest to find and destroy Horcruxes to weaken Voldemort. The Deathly Hallows, three magical objects, play a crucial role. The story ends with the climactic Battle of Hogwarts, the final defeat of Voldemort, and the epilogue showing the characters'' futures.', 
     '2007-07-21'
   )
+
+INSERT INTO books (
+  title, genre, fileUrl, slug, author, isbn, 
+  is_borrowed, imageUrl, synopsis, 
+  published_date
+) 
+VALUES 
+  (
+    'The Lost Symbol',
+    'Thriller,Adventure,Mystery,Conspiracy',
+    'https://res.cloudinary.com/dhrs3yldr/raw/upload/v1698979130/3_The_Lost_Symbol_-_Dan_Brown_zgnsth.epub',
+    'the-lost-symbol',
+    'Dan Brown',
+    '2345678901234',
+    false,
+    'https://res.cloudinary.com/dhrs3yldr/image/upload/v1698980844/lost-symbol_c1jruw.jpg',
+    'Harvard symbologist Robert Langdon is called to Washington, D.C. to help solve a mystery involving his mentor, Peter Solomon. Peter''s severed hand is found in the U.S. Capitol with a Masonic symbol. Langdon discovers that Peter''s kidnapper seeks to reveal a powerful Masonic secret, which is said to be hidden beneath the city. Langdon, along with Peter''s sister Katherine and CIA agent Inoue Sato, races against time to uncover the truth and prevent a catastrophic revelation. The novel explores the world of Freemasonry, ancient mysteries, and the power of the human mind.',
+    '2009-09-15'
+  ),
+  (
+    'Angels and Demon',
+    'Thriller,Adventure,Mystery,Conspiracy',
+    'https://res.cloudinary.com/dhrs3yldr/raw/upload/v1698979130/1_Angels_and_Demons_-_Dan_Brown_kyycz7.epub',
+    'angels-and-demon',
+    'Dan Brown',
+    '2345678901234',
+    false,
+    'https://res.cloudinary.com/dhrs3yldr/image/upload/v1698980844/angel-demon_msnuyh.jpg',
+    'Harvard symbologist Robert Langdon is called to the Vatican after a scientist is murdered with the word "Illuminati" branded on his chest. Langdon discovers a plot to destroy the Vatican using antimatter stolen from CERN. With the help of Vittoria Vetra, the scientist''s daughter, Langdon races against time to unravel the ancient secrets of the Illuminati and prevent a catastrophic disaster. The novel explores the conflict between science and religion and takes readers on a thrilling journey through the historic sites of Rome.',
+    '2000-05-12'
+  ),
+  (
+    'The Da Vinci Code',
+    'Thriller,Adventure,Mystery,Conspiracy',
+    'https://res.cloudinary.com/dhrs3yldr/raw/upload/v1698979130/2_The_Da_Vinci_Code_-_Dan_Brown_fprvlp.epub',
+    'the-da-vinci-code',
+    'Dan Brown',
+    '2345678901234',
+    false,
+    'https://res.cloudinary.com/dhrs3yldr/image/upload/v1698980844/da-vinci-code_ddkrha.jpg',
+    'Harvard symbologist Robert Langdon is called to the Louvre Museum in Paris after the curator is found murdered, leaving behind a series of cryptic clues. Langdon, along with French cryptologist Sophie Neveu, embarks on a quest to unravel the secrets hidden within the works of Leonardo da Vinci and uncover a religious mystery that could change the course of history. They must decipher codes, follow a trail of hidden symbols, and stay one step ahead of a secret organization while seeking the Holy Grail. The novel explores art, religion, and history while delivering a gripping and suspenseful narrative.',
+    '2003-03-18'
+  ),
+  (
+    'Inferno',
+    'Thriller,Adventure,Mystery,Conspiracy',
+    'https://res.cloudinary.com/dhrs3yldr/raw/upload/v1698979130/4_Inferno_-_Dan_Brown_wpmwg0.epub',
+    'inferno',
+    'Dan Brown',
+    '2345678901234',
+    false,
+    'https://res.cloudinary.com/dhrs3yldr/image/upload/v1698981519/inferno_iv0gf3.jpg',
+    'Harvard professor Robert Langdon awakens in a hospital in Florence, Italy, with no memory of the past few days. He is soon pursued by an assassin and teams up with Sienna Brooks, a doctor. Langdon discovers a mysterious cylinder containing Dante''s "Inferno," a map of hell. The pair follows a trail of clues related to Dante''s work, leading them to uncover a deadly plot by a mad geneticist. The novel explores themes of overpopulation and ethical dilemmas while taking readers on a thrilling journey through historical landmarks in Florence and Venice.',
+    '2013-05-14'
+  ),
+  (
+    'Origin',
+    'Thriller,Adventure,Mystery,Conspiracy',
+    'https://res.cloudinary.com/dhrs3yldr/raw/upload/v1698979130/5_Origin_-_Dan_Brown_bn4rfg.epub',
+    'origin',
+    'Dan Brown',
+    '2345678901234',
+    false,
+    'https://res.cloudinary.com/dhrs3yldr/image/upload/v1698980844/origin_twto7p.jpg',
+    'Harvard professor Robert Langdon is invited to a high-tech presentation at the Guggenheim Museum in Bilbao, Spain, by his former student Edmond Kirsch, a futurist and computer scientist. Kirsch has made a groundbreaking discovery that he believes will answer humanity''s most profound questions: Where do we come from, and where are we going? However, just as Kirsch is about to unveil his discovery, chaos erupts, and he is assassinated. Langdon teams up with Ambra Vidal, the museum director, to decipher Kirsch''s cryptic presentation. As they follow the trail of clues, they uncover a revelation that could challenge established religious beliefs and the future of human civilization. The novel delves into the conflict between science and religion while taking readers on a fast-paced journey through Spain.',
+    '2017-10-03'
+  )
